@@ -1,0 +1,153 @@
+@page "/Personas"
+
+@using BLL
+@using Models
+@inject IToastService Toast
+
+<EditForm Model="Personas" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator />
+    <div class="card">
+        <div class="card-header">
+            <h3>Registro de Personas</h3>
+        </div>
+        <div class="card-body">
+
+            @*——————————————————————————————————————————————[ CLIENTE ID ]——————————————————————————————————————————————*@
+            <div class="form-row align-items-center">
+                <div class="col">
+                    <div class="form-group">
+                        <label>PersonaId</label>
+                        <div class="input-group">
+                            <InputNumber @bind-Value="Personas.PersonaId" class="form-control col-2" min="0"  />
+
+                            @*——————————————————————————————————————————————[ BUSCAR ]——————————————————————————————————————————————*@
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-primary input-group-text"  @onclick="Buscar"><i class="oi oi-magnifying-glass" />Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*——————————————————————————————————————————————[ NOMBRE ]——————————————————————————————————————————————*@
+            <div class="form-group">
+                <label>Nombres</label>
+                <InputText @bind-Value="Personas.Nombres" height="8,2"  class="form-control col-4" />
+                <ValidationMessage For="@(() => Personas.Nombres)" />
+            </div>
+            @*——————————————————————————————————————————————[ Telefono ]——————————————————————————————————————————————*@
+            <div class="form-group">
+                <label>Teléfono</label>
+                <InputText @bind-Value="Personas.Telefono"  class="form-control col-4" />
+                <ValidationMessage For="@(() => Personas.Telefono)" />
+            </div>
+
+            @*——————————————————————————————————————————————[ Cedula ]——————————————————————————————————————————————*@
+            <div class="form-group">
+                <label>Cédula</label>
+                <InputText @bind-Value="Personas.Cedula"  class="form-control col-4" />
+                <ValidationMessage For="@(() => Personas.Cedula)" />
+            </div>
+
+            @*——————————————————————————————————————————————[ Direccion ]——————————————————————————————————————————————*@
+            <div class="form-group">
+                <label>Dirección</label>
+                <InputText @bind-Value="Personas.Direccion"  class="form-control col-4" />
+                <ValidationMessage For="@(() => Personas.Direccion)" />
+            </div>
+            
+            @*——————————————————————————————————————————————[ Balance ]——————————————————————————————————————————————*@
+            <div class="form-group">
+                <label>Balance</label>
+                <InputNumber @bind-Value="Personas.Balance"  class="form-control col-4" readonly />
+                <ValidationMessage For="@(() => Personas.Balance)" />
+            </div>
+
+            @*——————————————————————————————————————————————[ Fecha Nacimiento ]——————————————————————————————————————————————*@
+            <div class="form-group">
+                <label>Fecha Nacimiento</label>
+                <InputDate @bind-Value="Personas.FechaNacimiento"  class="form-control col-4" />
+                <ValidationMessage For="@(() => Personas.FechaNacimiento)" />
+            </div>
+
+            @*——————————————————————————————————————————————[ NUEVO / GUARDAR / ELIMINAR ]——————————————————————————————————————————————*@
+        <div class="card-footer">
+            <div class="form-group text-center" display: inline-block>
+                <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo"><i class="oi oi-file mr-2" />Nuevo</button>
+                <button type="submit" class="btn btn-lg btn-success" style="margin-inline-start: 40px;"><i class="oi oi-account-login" style="transform:rotate(90deg)" /> Guardar</button>
+                <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar" style="margin-inline-start: 40px;"><i class="oi oi-trash mr-2" />Eliminar</button>
+            </div>
+        </div>
+
+
+        </div>
+
+    </div>
+</EditForm>
+
+@*——————————————————————————————————————————————[ CODIGO ]——————————————————————————————————————————————*@
+@code {[Parameter]
+                public int PersonaId { get; set; }
+
+        private Personas Personas = new Personas();
+
+            protected override void OnInitialized()
+            {
+                Nuevo();
+            }
+
+    @*——————————————————————————————————————————————[NUEVO]——————————————————————————————————————————————*@
+        public void Nuevo()
+            {
+                Personas = new Personas();
+            }
+
+    @*——————————————————————————————————————————————[BUSCAR]——————————————————————————————————————————————*@
+        private void Buscar()
+            {
+                if (Personas.PersonaId > 0)
+                {
+                    var encontrado = PersonasBLL.Buscar(Personas.PersonaId);
+
+                    if (encontrado != null)
+                        this.Personas = encontrado;
+                    else
+                        Toast.ShowWarning("Esta Id no pudo ser encontrada.");
+                    return;
+                }
+            }
+
+    @*——————————————————————————————————————————————[ GUARDAR ]——————————————————————————————————————————————*@
+        public void Guardar()
+        {
+            bool guardado;
+
+            guardado = PersonasBLL.Guardar(Personas);
+
+            if (guardado)
+            {
+                Nuevo();
+                Toast.ShowSuccess("Registro Guardado exitosamente.");
+            }
+            else
+                Toast.ShowError("No fue posible Guardar este Registro.");
+            return;
+        }
+
+    @*——————————————————————————————————————————————[ ELIMINAR ]——————————————————————————————————————————————*@
+        public void Eliminar()
+        {
+            bool eliminado;
+
+            eliminado = PersonasBLL.Eliminar(Personas.PersonaId);
+
+            if (eliminado)
+            {
+                Nuevo();
+                Toast.ShowSuccess("Registro Eliminado exitosamente.");
+            }
+            else
+                Toast.ShowError("No fue posible Eliminar este Registro.");
+            return;
+        }
+}
