@@ -107,6 +107,9 @@ namespace Registro_Detalle_AP2.Migrations
                     b.Property<decimal>("Monto")
                         .HasColumnType("TEXT");
 
+                    b.Property<float>("Mora")
+                        .HasColumnType("REAL");
+
                     b.Property<int>("PersonaId")
                         .HasColumnType("INTEGER");
 

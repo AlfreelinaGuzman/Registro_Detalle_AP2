@@ -9,7 +9,7 @@ using Registro_Detalle_AP2.DAL;
 namespace Registro_Detalle_AP2.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20210614032723_Inicial")]
+    [Migration("20210615000438_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -108,6 +108,9 @@ namespace Registro_Detalle_AP2.Migrations
 
                     b.Property<decimal>("Monto")
                         .HasColumnType("TEXT");
+
+                    b.Property<float>("Mora")
+                        .HasColumnType("REAL");
 
                     b.Property<int>("PersonaId")
                         .HasColumnType("INTEGER");

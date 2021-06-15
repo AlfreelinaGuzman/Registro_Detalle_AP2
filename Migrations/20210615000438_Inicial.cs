@@ -70,7 +70,8 @@ namespace Registro_Detalle_AP2.Migrations
                     PersonaId = table.Column<int>(type: "INTEGER", nullable: false),
                     Concepto = table.Column<string>(type: "TEXT", nullable: false),
                     Monto = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Balance = table.Column<decimal>(type: "TEXT", nullable: false)
+                    Balance = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Mora = table.Column<float>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {

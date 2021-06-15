@@ -12,7 +12,7 @@
         </div> 
         <div class="card-body">
 
-            @*——————————————————————————————————————————————[ persona ID ]——————————————————————————————————————————————*@
+            @*——————————————————————————————————————————————   persona ID   ——————————————————————————————————————————————*@
             <div class="form-row align-items-center">
                 <div class="col">
                     <div class="form-group">
@@ -20,7 +20,7 @@
                         <div class="input-group">
                             <InputNumber @bind-Value="prestamos.PrestamoId" class="form-control col-2" min="0" height="8" widht="2" />
 
-                            @*——————————————————————————————————————————————[ BUSCAR ]——————————————————————————————————————————————*@
+                            @*——————————————————————————————————————————————   BUSCAR   ——————————————————————————————————————————————*@
                             <div class="input-group-append">
                                 <button type="button" class="btn btn-primary input-group-text" height="8" widht="2" @onclick="Buscar"><i class="oi oi-magnifying-glass" />Buscar</button>
                             </div>
@@ -42,13 +42,13 @@
                     </InputSelect>
             </div>
 
-            @*——————————————————————————————————————————————[ Concepto ]——————————————————————————————————————————————*@
+            @*——————————————————————————————————————————————   Concepto   ——————————————————————————————————————————————*@
             <div class="form-group">
                 <label>Concepto</label>
-                <InputText @bind-Value="prestamos.Concepto" height="8,2" widht="2" class="form-control col-4" />
+                <InputText @bind-Value="prestamos.Concepto" height="8,2" widht="2" class="form-control col-4" placeholder="Inserte Concepto" />
                 <ValidationMessage For="@(() => prestamos.Concepto)" />
             </div>
-            @*——————————————————————————————————————————————[ Monto ]——————————————————————————————————————————————*@
+            @*——————————————————————————————————————————————   Monto   ——————————————————————————————————————————————*@
             <div class="form-group">
                 <label>Monto</label>
                 <input type="number"  @bind-value="prestamos.Monto" @bind-value:event="oninput"  height="8" widht="2" class="form-control col-4" />
@@ -59,7 +59,7 @@
                 }
             </div>
 
-            @*——————————————————————————————————————————————[ Balance ]——————————————————————————————————————————————*@
+            @*——————————————————————————————————————————————   Balance   ——————————————————————————————————————————————*@
             <div class="form-group">
                 <label>Balance</label>
                 <InputNumber @bind-Value="prestamos.Balance" height="8" widht="2" class="form-control col-4" readonly/>
@@ -68,30 +68,29 @@
             </div>
 
         
-
-            @*——————————————————————————————————————————————[ Fecha  ]——————————————————————————————————————————————*@
+            @*——————————————————————————————————————————————   Fecha    ——————————————————————————————————————————————*@
             <div class="form-group">
                 <label>Fecha</label>
                 <InputDate @bind-Value="prestamos.Fecha" height="8" widht="2" class="form-control col-4" />
                 <ValidationMessage For="@(() => prestamos.Fecha)" />
             </div>
 
-            @*——————————————————————————————————————————————[ NUEVO / GUARDAR / ELIMINAR ]——————————————————————————————————————————————*@
+            @*——————————————————————————————————————————————   NUEVO / GUARDAR / ELIMINAR   ——————————————————————————————————————————————*@
          <div class="card-footer">
             <div class="form-group text-center" display: inline-block>
-                <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo"><i class="oi oi-file mr-2" />Nuevo</button>
-                <button type="submit" class="btn btn-lg btn-success" style="margin-inline-start: 40px;"><i class="oi oi-account-login" style="transform:rotate(90deg)" /> Guardar</button>
-                <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar" style="margin-inline-start: 40px;"><i class="oi oi-trash mr-2" />Eliminar</button>
+                <button type="button" class="btn btn btn-primary" @onclick="Nuevo"><i class="oi oi-file mr-2" />Nuevo</button>
+                <button type="submit" class="btn btn btn-success" style="margin-inline-start: 40px;"><i class="oi oi-account-login" style="transform:rotate(90deg)" /> Guardar</button>
+                <button type="button" class="btn btn btn-danger" @onclick="Eliminar" style="margin-inline-start: 40px;"><i class="oi oi-trash mr-2" />Eliminar</button>
             </div>
         </div>
         </div>
     </div>
 </EditForm>
 
-@*——————————————————————————————————————————————[ CODIGO ]——————————————————————————————————————————————*@
+@*——————————————————————————————————————————————   CODIGO   ——————————————————————————————————————————————*@
 @code
 {
-     [Parameter]
+      [Parameter]  
         
         public decimal changedMonto {get; set;}
         public int PersonaIndex { get; set; }
@@ -112,14 +111,14 @@
 
             }
 
-    @*——————————————————————————————————————————————[NUEVO]——————————————————————————————————————————————*@
+    @*——————————————————————————————————————————————  NUEVO  ——————————————————————————————————————————————*@
         public void Nuevo()
             {
                 prestamos = new Prestamos();
                 PersonaIndex = 0;
             }
 
-    @*——————————————————————————————————————————————[BUSCAR]——————————————————————————————————————————————*@
+    @*——————————————————————————————————————————————  BUSCAR  ——————————————————————————————————————————————*@
         private void Buscar()
             {
                 if (prestamos.PrestamoId > 0)
@@ -137,7 +136,7 @@
                 }
             }
 
-    @*——————————————————————————————————————————————[ GUARDAR ]——————————————————————————————————————————————*@
+    @*——————————————————————————————————————————————   GUARDAR   ——————————————————————————————————————————————*@
         public void Guardar()
         {
             bool guardado;
@@ -155,7 +154,7 @@
             return;
         }
 
-    @*——————————————————————————————————————————————[ ELIMINAR ]——————————————————————————————————————————————*@
+    @*——————————————————————————————————————————————   ELIMINAR   ——————————————————————————————————————————————*@
         public void Eliminar()
         {
             bool eliminado;

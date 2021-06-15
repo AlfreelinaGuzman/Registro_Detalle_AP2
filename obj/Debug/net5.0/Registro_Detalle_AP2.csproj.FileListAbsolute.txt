@@ -172,3 +172,5 @@ C:\Users\Lina\Desktop\APLICADA II\Registros\Registro_Detalle_AP2\obj\Debug\net5.
 C:\Users\Lina\Desktop\APLICADA II\Registros\Registro_Detalle_AP2\obj\Debug\net5.0\Razor\Pages\Registros\RPrestamos.razor.g.cs
 C:\Users\Lina\Desktop\APLICADA II\Registros\Registro_Detalle_AP2\obj\Debug\net5.0\RazorDeclaration\Pages\Registros\RPersonas.razor.g.cs
 C:\Users\Lina\Desktop\APLICADA II\Registros\Registro_Detalle_AP2\obj\Debug\net5.0\Razor\Pages\Registros\RPersonas.razor.g.cs
+C:\Users\Lina\Desktop\APLICADA II\Registros\Registro_Detalle_AP2\obj\Debug\net5.0\RazorDeclaration\Pages\Registros\RMoras.razor.g.cs
+C:\Users\Lina\Desktop\APLICADA II\Registros\Registro_Detalle_AP2\obj\Debug\net5.0\Razor\Pages\Registros\RMoras.razor.g.cs

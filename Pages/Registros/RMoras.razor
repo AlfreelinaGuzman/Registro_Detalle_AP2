@@ -1,0 +1,244 @@
+@page "/moras"
+
+@using BLL
+@using Models
+@inject IToastService Toast
+
+<EditForm Model="moras" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator />
+    <div class="card">
+        <div class="card-header">
+            <h3>Registro de Moras</h3>
+        </div>
+        <div class="card-body">
+            <form>
+                @*——————————————————————————————————————————————   Mora Id   ——————————————————————————————————————————————*@
+                <div class="form-row">
+                    <div class="form-group col-3">
+                        <label><b>Mora Id</b></label>
+                        <div class="input-group">
+                            <InputNumber @bind-Value="moras.MoraId" class="form-control" min="0" placeholder="NombresPersona Id" />
+                            @*——————————————————————————————————————————————   BUSCAR   ——————————————————————————————————————————————*@
+                            <button type="button" class="btn btn-primary" @onclick="Buscar"><i class="oi oi-magnifying-glass" /> Buscar</button>
+                        </div>
+                    </div>
+                </div>
+
+                @*——————————————————————————————————————————————   Fecha   ——————————————————————————————————————————————*@
+                <div class="mb-3">
+                    <label><b>Fecha </b></label>
+                    <InputDate @bind-Value="moras.Fecha" class="form-control" />
+                    <ValidationMessage For="@(() => moras.Fecha)" />
+                </div>
+
+                @*——————————————————————————————————————————————   Select de Prestamos   ——————————————————————————————————————————————*@
+                <div class="card-body border">
+                    <div class="form-group mr-lg-5" style="float:left;">
+                        <label>Prestamo Id</label>
+                        <select @bind="PrestamoSeleccionado" class="form-control">
+                            <option value="0" disabled selected>Seleccione un prestamo...</option>
+                            @foreach (var item in ListaPrestamos)
+                            {
+                                @((prestamo) = PrestamosBLL.Buscar(item.PrestamoId));
+                                @((personas) = PersonasBLL.Buscar(prestamo.PersonaId));
+                                
+                            }
+                        </select>
+                    </div>
+
+                    @*——————————————————————————————————————————————   Valor   ——————————————————————————————————————————————*@
+                    <div class="form-group" style="float:left;">
+                        <label>Valor</label>
+                        <div class="input-group">
+                            <InputNumber @bind-Value="morasDetalle.Valor" class="form-control" />
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-warning" @onclick="AgregarFila"><i class="oi oi-plus mr-2" />Agregar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*——————————————————————————————————————————————   TITULOS DE LA TABLA   ——————————————————————————————————————————————*@
+                    <table class="table table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Prestamo Id</th>
+                                <th>Valor</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        @*——————————————————————————————————————————————   DATOS DE LA TABLA   ——————————————————————————————————————————————*@
+                        <tbody>
+                            @foreach (var morasDetalle in moras.MorasDetalle)
+                            {
+                                <tr>
+                                    <td>@morasDetalle.PrestamoId</td>
+                                   
+                                    <td>@string.Format("{0:c}", morasDetalle.Valor)</td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger" @onclick="()=>RemoverFila(morasDetalle)"><i class="oi oi-trash" /></button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <br />
+                @*——————————————————————————————————————————————   Total   ——————————————————————————————————————————————*@
+                <div>
+                    <label><b>Total</b></label>
+                    <InputNumber @bind-Value="moras.Total" class="form-control" readonly />
+                </div>
+            </form>
+        </div>
+
+        @*——————————————————————————————————————————————   NUEVO / GUARDAR / ELIMINAR   ——————————————————————————————————————————————*@
+        <div class="card-footer">
+            <div class="form-group text-center" display: inline-block>
+                <button type="button" class="btn btn btn-primary" @onclick="Nuevo"><i class="oi oi-file mr-2" />Nuevo</button>
+                <button type="submit" class="btn btn btn-success" style="margin-inline-start: 40px;"><i class="oi oi-account-login" style="transform:rotate(90deg)" /> Guardar</button>
+                <button type="button" class="btn btn btn-danger" @onclick="Eliminar" style="margin-inline-start: 40px;"><i class="oi oi-trash mr-2" />Eliminar</button>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@*——————————————————————————————————————————————   CODIGO   ——————————————————————————————————————————————*@
+@code {
+      [Parameter] 
+
+    public int MoraId { get; set; }
+    public int PrestamoSeleccionado { get; set; }
+    List<Prestamos> ListaPrestamos = new List<Prestamos>();
+
+    private Moras moras = new Moras();
+    private MorasDetalle morasDetalle = new MorasDetalle();
+
+    Personas personas = new Personas();
+    Prestamos prestamo = new Prestamos();
+
+    protected override void OnInitialized()
+    {
+        Nuevo();
+    }
+
+    @*——————————————————————————————————————————————   NUEVO   ——————————————————————————————————————————————*@
+    public void Nuevo()
+    {
+        moras = new Moras();
+        ListaPrestamos = PrestamosBLL.GetList(c => true);
+    }
+
+    private void Actualizar()
+    {
+        PrestamoSeleccionado = 0;
+        morasDetalle.Valor = 0;
+    }
+
+    @*——————————————————————————————————————————————   BUSCAR   ——————————————————————————————————————————————*@
+    private void Buscar()
+    {
+        var encontrado = MorasBLL.Buscar(moras.MoraId);
+
+        if (encontrado != null)
+        {
+            this.moras = encontrado;
+            return;
+        }
+        else
+            Nuevo();
+        Toast.ShowWarning("Esta Id no pudo ser encontrada.");
+        return;
+    }
+
+    @*——————————————————————————————————————————————   AGREGAR FILA   ——————————————————————————————————————————————*@
+    private void AgregarFila()
+    {
+        if (PrestamoSeleccionado == 0)
+        {
+            Toast.ShowError("Este prestamo no existe, Seleccione un prestamo valido.");
+            return;
+        }
+        else
+        {
+            var _prestamo = PrestamosBLL.Buscar(PrestamoSeleccionado);
+            var _persona = PersonasBLL.Buscar(_prestamo.PersonaId);
+
+            moras.MorasDetalle.Add(new MorasDetalle
+            {
+                MoraId = moras.MoraId,
+                PrestamoId = PrestamoSeleccionado,
+               // NombresPersona = _persona.NombreCompleto,
+                Valor = morasDetalle.Valor
+            });
+
+            moras.Total += morasDetalle.Valor;
+            _persona.Balance += morasDetalle.Valor;
+
+
+            PersonasBLL.Guardar(_persona);
+            Actualizar();
+        }
+    }
+
+
+    private void CalcularTotal()
+    {
+        decimal total = 0;
+        foreach (var item in moras.MorasDetalle)
+        {
+            total -= item.Valor;
+        }
+        moras.Total = total;
+    }
+
+    @*——————————————————————————————————————————————   REMOVER FILA   ——————————————————————————————————————————————*@
+private void RemoverFila(MorasDetalle detalle)
+{
+    try
+    {
+        personas.Balance -= moras.Total;
+        moras.MorasDetalle.Remove(detalle);
+        CalcularTotal();
+    }
+    catch (Exception)
+    {
+        throw;
+    }
+}
+
+
+    @*——————————————————————————————————————————————   GUARDAR   ——————————————————————————————————————————————*@
+    public void Guardar()
+    {
+        bool guardado;
+
+        guardado = MorasBLL.Guardar(moras);
+
+        if (guardado)
+        {
+            Nuevo();
+            Toast.ShowSuccess("Registro Guardado exitosamente.");
+        }
+        else
+            Toast.ShowError("No fue posible Guardar este Registro.");
+        return;
+    }
+
+    @*——————————————————————————————————————————————   ELIMINAR   ——————————————————————————————————————————————*@
+    public void Eliminar()
+    {
+        bool eliminado;
+
+        eliminado = MorasBLL.Eliminar(moras.MoraId);
+
+        if (eliminado)
+        {
+            Nuevo();
+            Toast.ShowSuccess("Registro Eliminado exitosamente.");
+        }
+        else
+            Toast.ShowError("No fue posible Eliminar este Registro.");
+        return;
+    }
+}

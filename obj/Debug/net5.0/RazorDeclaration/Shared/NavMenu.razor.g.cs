@@ -104,7 +104,7 @@ using Blazored.Toast.Services;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 29 "C:\Users\Lina\Desktop\APLICADA II\Registros\Registro_Detalle_AP2\Shared\NavMenu.razor"
+#line 35 "C:\Users\Lina\Desktop\APLICADA II\Registros\Registro_Detalle_AP2\Shared\NavMenu.razor"
        
     private bool collapseNavMenu = true;
 

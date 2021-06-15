@@ -119,9 +119,9 @@ using Models;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 93 "C:\Users\Lina\Desktop\APLICADA II\Registros\Registro_Detalle_AP2\Pages\Registros\RPrestamos.razor"
+#line 92 "C:\Users\Lina\Desktop\APLICADA II\Registros\Registro_Detalle_AP2\Pages\Registros\RPrestamos.razor"
  
-     [Parameter]
+      [Parameter]  
         
         public decimal changedMonto {get; set;}
         public int PersonaIndex { get; set; }
@@ -148,8 +148,8 @@ using Models;
 #line hidden
 #nullable disable
 #nullable restore
-#line 115 "C:\Users\Lina\Desktop\APLICADA II\Registros\Registro_Detalle_AP2\Pages\Registros\RPrestamos.razor"
-                                                                                                           
+#line 114 "C:\Users\Lina\Desktop\APLICADA II\Registros\Registro_Detalle_AP2\Pages\Registros\RPrestamos.razor"
+                                                                                                             
         public void Nuevo()
             {
                 prestamos = new Prestamos();
@@ -162,8 +162,8 @@ using Models;
 #line hidden
 #nullable disable
 #nullable restore
-#line 122 "C:\Users\Lina\Desktop\APLICADA II\Registros\Registro_Detalle_AP2\Pages\Registros\RPrestamos.razor"
-                                                                                                            
+#line 121 "C:\Users\Lina\Desktop\APLICADA II\Registros\Registro_Detalle_AP2\Pages\Registros\RPrestamos.razor"
+                                                                                                              
         private void Buscar()
             {
                 if (prestamos.PrestamoId > 0)
@@ -187,8 +187,8 @@ using Models;
 #line hidden
 #nullable disable
 #nullable restore
-#line 140 "C:\Users\Lina\Desktop\APLICADA II\Registros\Registro_Detalle_AP2\Pages\Registros\RPrestamos.razor"
-                                                                                                               
+#line 139 "C:\Users\Lina\Desktop\APLICADA II\Registros\Registro_Detalle_AP2\Pages\Registros\RPrestamos.razor"
+                                                                                                                 
         public void Guardar()
         {
             bool guardado;
@@ -212,8 +212,8 @@ using Models;
 #line hidden
 #nullable disable
 #nullable restore
-#line 158 "C:\Users\Lina\Desktop\APLICADA II\Registros\Registro_Detalle_AP2\Pages\Registros\RPrestamos.razor"
-                                                                                                                
+#line 157 "C:\Users\Lina\Desktop\APLICADA II\Registros\Registro_Detalle_AP2\Pages\Registros\RPrestamos.razor"
+                                                                                                                  
         public void Eliminar()
         {
             bool eliminado;

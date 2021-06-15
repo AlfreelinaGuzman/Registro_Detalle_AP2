@@ -17,8 +17,8 @@ namespace Registro_Detalle_AP2.Models
         public decimal Monto { get; set; }
         [Required(ErrorMessage ="Este campo no puede estar vacio.")]
         public decimal Balance { get; set; }
-       // [Required(ErrorMessage ="Este campo no puede estar vacio.")]
-       // public float Mora { get; set; }
+        [Required(ErrorMessage ="Este campo no puede estar vacio.")]
+        public float Mora { get; set; }
        
         [ForeignKey("PersonaId")]
         public virtual Personas Personas { get; set; }
